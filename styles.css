@@ -9,6 +9,7 @@
 
 body{
     display: contents;
+    text-align: center;
     
 }
 
@@ -70,8 +71,6 @@ body{
     display: inline-flex;
     justify-content: center;
     animation: fade-up 1.0s 1.0s forwards;
-
-
 
 }
 
@@ -137,19 +136,23 @@ body{
 img{
     max-width: 480px;
     max-width: 360px;
+    border-radius: 1.5em;
     
 }
 
+img[type="card"]{
+    height:256px;
+    width: 256px;
+    border-radius: 1.2em;
+    object-fit: fill;
+}
+
 a:link { text-decoration: none; }
-
-
 a:visited { text-decoration: none; }
-
-
 a:hover { text-decoration: none; color:gray;}
-
-
 a:active { text-decoration: none; }
+
+
 
 a[type="header"]{
     color:#f9faf8;
