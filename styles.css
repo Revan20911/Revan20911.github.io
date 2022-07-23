@@ -3,13 +3,14 @@
     height: 75px;
     display: inline-flex;
     width: 100%;
-    justify-content: space-around; 
+    justify-content:space-evenly 
 
 }
 
 body{
     display: contents;
     text-align: center;
+    background-color: #f9faf8;
     
 }
 
@@ -19,8 +20,8 @@ body{
     color: #f9faf8; 
     font-weight: bold;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-    align-items: center;
-    margin:10px;
+    align-items: left;
+    
 
 
 }
@@ -57,19 +58,20 @@ body{
     width:100%;
     height: 30em;
     align-items: center;
-    justify-content:space-around;
+    justify-content:space-evenly;
     font-family: arial;
+    
 
 }
 
 .content-wrap[type="cards"]{
 
     opacity: 0;
-    background-color: #f9faf8;
+    background-color:#f9faf8;
     width: 100%;
     height: 30em;
     display: inline-flex;
-    justify-content: center;
+    justify-content: space-evenly;
     animation: fade-up 1.0s 1.0s forwards;
 
 }
@@ -92,8 +94,8 @@ body{
     text-align: center;
     word-wrap: normal;
     color:#1f2937;
-    margin:auto;
-
+    font-size:larger;
+    
 }
 
 .card:hover{
@@ -107,9 +109,11 @@ body{
     height:fit-content;
     width: 550px;
     text-align:left;
+    line-height: 1.5em;
     color: #f9faf8;
     margin: 50px; 
     animation: slide-in 1.0s 0.5s forwards; 
+
 
 }
 
@@ -134,8 +138,7 @@ body{
 }
 
 img{
-    max-width: 480px;
-    max-width: 360px;
+    
     border-radius: 1.5em;
     
 }
@@ -152,7 +155,27 @@ a:visited { text-decoration: none; }
 a:hover { text-decoration: none; color:gray;}
 a:active { text-decoration: none; }
 
+h1{
+    opacity: 0;
+    
+    
+    color:#1f2937;
+    font-size: 45px;
+    font-family: arial;
+    justify-content: center;
+    animation: fade-up 1.0s 0.7s forwards;
+    margin: 10px;
+    padding:25px;
+    
+    
+  
 
+}
+
+H2{
+    font-size: 45px;
+    font-family: arial;
+}
 
 a[type="header"]{
     color:#f9faf8;
@@ -160,6 +183,10 @@ a[type="header"]{
 
 a[type="header"]:hover{
     color: gray;
+}
+
+a{
+    margin-top: 200px;
 }
 
 @keyframes slide-in{
