@@ -1,94 +1,135 @@
-var player1_choice = 0;
-var computerChoice = 0;
+let player1_choice = null;
+let computerChoice = null;
 
-var count = 0;
-
-
-window.onload = () =>{
+window.onload = function init(){
 
  const rock = document.getElementById("Rock");
  const paper = document.getElementById("Paper");
  const scissors = document.getElementById("Scissors");
+ const close_modal = document.getElementById("close");
+ 
+
+
 
  rock.addEventListener('click', clickRock);
  paper.addEventListener('click', clickPaper);
  scissors.addEventListener('click', clickScissors);
-
+ close_modal.addEventListener('click', closeModal);
 
 }
 
 
 function clickRock(){
-    player1_choice++;
-    // computer_Choice();
-    console.log(player1_choice);
+    player1_choice = 1;
+    computer_Choice();
+    console.log(player1_choice, computerChoice);
+
 }
 
 function clickPaper(){
-    var id = document.getElementById("Paper");
-    if(this.id == id){
-        player1_choice +=2;
-        compute_Choice();
-        GameResult();
-        count++;
-        
-    }
-
-    console.log(player1_choice);
+    player1_choice = 2;
+    computer_Choice();
+    console.log(player1_choice, computerChoice);
 }
 
 function clickScissors(){
-
-    var id = document.getElementById("Scissors");
-    if(this.id == id){
-        player1_choice +=3;
-        computer_Choice();
-        GameResult();
-        count++;
-    }
-
+    
+    player1_choice = 3;
+    computer_Choice();
     console.log(player1_choice);
 
 }
 
+function closeModal(){
+
+    let winnerBox = document.getElementById("win-box");
+    winnerBox.style.display = 'none';
+    reset();
+
+}
 
 function computer_Choice(){
 
     var numArray = new Array(1,2,3);
+    let rand = Math.floor(Math.random() * 3);
+    computerChoice = numArray[rand];
+    GameResult();
 }
 
 function GameResult(){
 
-    var winner = 0;
+    let winnerBox = document.getElementById("win-box");
+    let winner = document.querySelector('[class="modal-message"]');
+
+    let draw = "DRAW";
+    let p1 = "Player 1 wins";
+    let cpu = "Computer Wins";
+    
 
     if(player1_choice == 1){
         if(computerChoice == 1){
-            // display "DRAW!"
+
+            winnerBox.style.display = "flex";
+            winner.innerHTML = draw;
+            
         }
-        else if(computerChoice == 2){
-            // display "Player 2 wins the round!"
-        }
-        else{
-            // player 1 wins the round
+        if(computerChoice == 2){
+
+            winnerBox.style.display = "flex";
+            winner.innerHTML = "Player 1 wins!";
+        }else{
+
+            winnerBox.style.display = "flex";
+            winner.innerHTML = "Computer Wins!";
         }
     }
 
+    if(player1_choice == 2){
+        if(computerChoice == 1){
 
+            winnerBox.style.display = "flex";
+            winner.innerHTML = "Player 1 wins!";
 
-    if(winner == 1){
+        }else if(computerChoice == 2){
 
-        // some kind of win message for player 1
+            winnerBox.style.display = "flex";
+            winner.innerHTML = "DRAW! ";
+
+        }else{
+
+            winnerBox.style.display = "flex";
+            winner.innerHTML = "computer wins!";
+        }
     }
+    if(player1_choice == 3){
+        if(computerChoice == 1){
 
-    else{
-        // some kind of win message for computer
+            winnerBox.style.display = "flex";
+            winner.innerHTML = "computer wins!";
+
+        }else if(computerChoice == 2){
+
+            
+            winnerBox.style.display = "flex";
+            winner.innerHTML = "Player 1 wins!";
+            
+
+        }else{
+
+            winnerBox.style.display = "flex";
+            winner.innerHTML = "DRAW! ";
+            
+        }
     }
-
 }
 
-function playAgain(){
+function updateScore(){
 
-    count == 0;
-    player1_choice == 0;
-    computerChoice == 0;
+    document.getElementById("score").innerHTML = count;
+}
+
+function reset(){
+
+    player1_choice === 0;
+    computerChoice === 0;
 }
