@@ -1,0 +1,19 @@
+body{
+    background-color: #18191a;
+}
+
+
+
+.scoreboard{
+
+    width: 600px;
+    height: 200px;
+    color:white;
+    display: inline-flex;
+}
+
+.score-card{
+
+    text-align: center;
+    
+}

@@ -14,6 +14,8 @@ body{
     
 }
 
+
+
 .nav-logo{
     display:flex;
     font-size: 24px;
@@ -21,12 +23,8 @@ body{
     
     font-family: arial;
     align-items: left;
-    
-
 
 }
-
-
 .nav-box{
     width: fit-content;
     height:auto;
