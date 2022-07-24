@@ -4,28 +4,40 @@ var computerChoice = 0;
 var count = 0;
 
 
-function clickRock(this){
-    var id = document.getElementById("Paper");
-    if(this.id == id){
-        player1_choice +=1;
-        computer_Choice();
-        GameResult();
-    }
+window.onload = () =>{
+
+ const rock = document.getElementById("Rock");
+ const paper = document.getElementById("Paper");
+ const scissors = document.getElementById("Scissors");
+
+ rock.addEventListener('click', clickRock);
+ paper.addEventListener('click', clickPaper);
+ scissors.addEventListener('click', clickScissors);
 
 
 }
 
-function clickPaper(this){
+
+function clickRock(){
+    player1_choice++;
+    // computer_Choice();
+    console.log(player1_choice);
+}
+
+function clickPaper(){
     var id = document.getElementById("Paper");
     if(this.id == id){
         player1_choice +=2;
         compute_Choice();
         GameResult();
         count++;
+        
     }
+
+    console.log(player1_choice);
 }
 
-function clickScissors(this){
+function clickScissors(){
 
     var id = document.getElementById("Scissors");
     if(this.id == id){
@@ -34,6 +46,8 @@ function clickScissors(this){
         GameResult();
         count++;
     }
+
+    console.log(player1_choice);
 
 }
 

@@ -10,6 +10,7 @@ body{
     width: 600px;
     height: 200px;
     color:white;
+    font-size: larger;
     display: inline-flex;
     justify-content: space-evenly;
     animation: fade-in, 1s, 0.5s, forwards;
