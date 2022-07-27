@@ -1,77 +1,136 @@
-const addForm = document.querySelector('[class="modal"]');
 
-const modal = document.querySelector('[class="modal"]');
 
-const bookShelf = document.querySelector('[class="bookshelf-container"]');
+const $modal = document
+    .querySelector('.modal');
+
+const $bookShelf = document
+    .querySelector('.bookshelf-container');
 
 let library = [];
 
-window.onload = () =>{
-
-    document.querySelector('[class="submit"]').addEventListener('click', addBook()); 
-
-}
-
 
 class Book {
-    constructor() {
+    constructor(author, title, description) {
 
         this.author = "";
         this.title = "";
+        this.description = "";
 
     }
 }
+
+function fillShelf(cols, rows){
+
+    const shelf = [];
+
+    let $newBook = document
+        .createElement("div");
+
+    let $add = document
+        .createElement("div");
+
+    $bookShelf
+        .style
+        .setProperty('--grid-cols', cols);
+
+    $bookShelf
+        .style
+        .setProperty('--grid-rows', rows);
+
+    if(library.length == 0){
+        shelf.push($newBook);
+        
+        $bookShelf
+            .appendChild($newBook)
+            .className="book-container-add";
+
+        $newBook
+            .appendChild($add)
+            .className="add-button";
+
+        $newBook
+            .appendChild($add)
+            .innerText="+";
+
+        $newBook
+            .appendChild($add)
+            .addEventListener('click', () =>{
+
+            $modal
+                .style
+                .display = "flex";
+        })
+    
+    }
+    else{
+
+        library.forEach((book) =>{
+
+            shelf
+                .push($newBook);
+            
+            $bookShelf
+                .appendChild($newBook)
+                .className="book-container";
+                
+            $bookShelf
+                .appendChild($newBook)
+                .innerHTML = book.title;
+
+            console.log(library.length);
+
+            })
+           
+        }
+    }
+
+fillShelf(library.length, 1);
+
+document
+    .getElementById("submit")
+    .addEventListener('click', addBook); 
+
+document
+    .getElementById("delete")
+    .addEventListener('click', removeBook);
 
 
 function addBook(){
 
     var book = new Book();
 
-    var title = document.getElementById("title").value;
-    var author = document.getElementById("author").value;
+    var $title = document
+        .getElementById("title")
+        .value;
+
+    var $author = document
+        .getElementById("author")
+        .value;
 
 
-    if(title && author != ""){
+    if($title && $author != ""){
 
-        book.title = title;
-        book.author = author;
         library.push(book);
 
-        fillShelf();
+        book.title = $title;
+        book.author = $author;
 
-        modal.style.display = "none";
+        $modal.style.display = "none";
 
-    }
-    else{
-
-        document.getElementById("error").style.display = "flex";
+        fillShelf(library.length+1, 1);
     }
 
 }
 
-function fillShelf(){
 
-    let newBook = document.createElement("div");
 
-    if(library.length < 2){
-        bookShelf.appendChild(newBook).className="book-container";
-    }
-    else{
+function updateLocalStorage(){
 
-        for(let i = 0; i < library.length +1; i++){
-
-            bookShelf.appendChild(newBook).className="book-container";
-            bookShelf.appendChild(newBook).innerHTML = library[i].title;
-
-            if(i > library.length){
-
-                bookShelf.appendChild(newBook).className="book-container-add";
-            } 
-        }
-    }
 }
 
-fillShelf();
+function checkLocalStorage(){
+
+}
 
 
 
