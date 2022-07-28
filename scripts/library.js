@@ -1,136 +1,109 @@
 
 
-const $modal = document
-    .querySelector('.modal');
 
-const $bookShelf = document
-    .querySelector('.bookshelf-container');
 
-let library = [];
+$bookShelf = document.querySelector('.bookshelf-container');
+$modal = document.querySelector('.modal');
 
+$add = document.querySelector(".add-button");
+$add.addEventListener('click', () => {
+
+    $modal.style.display = "flex";
+})
+
+document.getElementById("submit").addEventListener('click', addBook); 
+
+const library = JSON.parse(localStorage.getItem("library")) || [];
 
 class Book {
-    constructor(author, title, description) {
+    constructor(author, title) {
 
-        this.author = "";
-        this.title = "";
+        this.author = author;
+        this.title = title;
         this.description = "";
 
     }
 }
 
-function fillShelf(cols, rows){
+function fillShelf(){
 
-    const shelf = [];
-
-    let $newBook = document
-        .createElement("div");
-
-    let $add = document
-        .createElement("div");
-
-    $bookShelf
-        .style
-        .setProperty('--grid-cols', cols);
-
-    $bookShelf
-        .style
-        .setProperty('--grid-rows', rows);
-
-    if(library.length == 0){
-        shelf.push($newBook);
+    library.forEach( function (book){
         
-        $bookShelf
-            .appendChild($newBook)
-            .className="book-container-add";
+        let $newBook = document.createElement("div");
+        $newBook.className = "book-container";
+        
+        let $delete = document.createElement("button");
+        $delete.className = "button";
+        $delete.innerHTML = "Delete";
 
-        $newBook
-            .appendChild($add)
-            .className="add-button";
+        let title = document.createElement("h3");
+        title.innerHTML = 'Title: ' + book.title;
 
-        $newBook
-            .appendChild($add)
-            .innerText="+";
+        let author = document.createElement("h4");
+        author.innerHTML = 'Author: ' + book.author;
+        
+        $bookShelf.appendChild($newBook);
+        $newBook.appendChild(title);
+        $newBook.appendChild(author);
+        $newBook.appendChild($delete);
 
-        $newBook
-            .appendChild($add)
-            .addEventListener('click', () =>{
+        $delete.addEventListener('click', ()=>{
 
-            $modal
-                .style
-                .display = "flex";
-        })
-    
-    }
-    else{
+            $bookShelf.removeChild($newBook);
+            library.splice($newBook, 1);
+            localStorage.setItem("library", JSON.stringify(library));
+        });
 
-        library.forEach((book) =>{
-
-            shelf
-                .push($newBook);
-            
-            $bookShelf
-                .appendChild($newBook)
-                .className="book-container";
-                
-            $bookShelf
-                .appendChild($newBook)
-                .innerHTML = book.title;
-
-            console.log(library.length);
-
-            })
-           
-        }
-    }
-
-fillShelf(library.length, 1);
-
-document
-    .getElementById("submit")
-    .addEventListener('click', addBook); 
-
-document
-    .getElementById("delete")
-    .addEventListener('click', removeBook);
-
+    })
+}
 
 function addBook(){
 
-    var book = new Book();
-
-    var $title = document
-        .getElementById("title")
-        .value;
-
-    var $author = document
-        .getElementById("author")
-        .value;
+        let $newBook = document.createElement("div");
+        $newBook.className = "book-container";
 
 
-    if($title && $author != ""){
+        const $title = document.getElementById("title").value;
+        let title = document.createElement("h3");
+        title.innerHTML = 'Title: ' + $title;
 
+
+        const $author = document.getElementById("author").value;
+        let author = document.createElement("h4");
+        author.innerHTML = 'Author: ' + $author;
+
+        let $delete = document.createElement("button");
+        $delete.className = "button";
+        $delete.innerHTML = "Delete";
+
+        const book = new Book($author, $title);
+        
         library.push(book);
+        localStorage.setItem("library", JSON.stringify(library));
+        $bookShelf.appendChild($newBook);
 
-        book.title = $title;
-        book.author = $author;
+        $newBook.appendChild(title);
+        $newBook.appendChild(author);
+        $newBook.appendChild($delete);
+        
+        $delete.addEventListener('click', ()=>{
 
-        $modal.style.display = "none";
+            $bookShelf.removeChild($newBook);
+            library.splice($newBook, 1);
+            localStorage.setItem("library", JSON.stringify(library));
+    })
 
-        fillShelf(library.length+1, 1);
-    }
-
+        
+    $modal.style.display = "none";
 }
 
 
+window.addEventListener("load", fillShelf);
 
-function updateLocalStorage(){
 
-}
 
-function checkLocalStorage(){
 
-}
+
 
 
 
