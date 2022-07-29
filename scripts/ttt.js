@@ -1,103 +1,111 @@
-const buildBoard = () => {
 
-    let container = document.querySelector(".board");
-    let boardArray = [];
-    return () => {
-
-        for(let i=0; i < 9; i++){
-
-            let $x = document.createElement("div");
-            $x.className = "x";
-            $x.innerHTML = "x";
-
-            let $o = document.createElement("div");
-            $o.className = "o";
-            $o.innerHTML = "o";
-            
-            let $cell = document.createElement("div");
-            $cell.className = "cell";
-            $cell.id = i;
-            $cell.appendChild($x);
-            $cell.appendChild($o);
-            container.appendChild($cell);
-            $cell.addEventListener("click", () => {
-
-                if($x.style.display == "block"){
-                    $x.style.display = "none";
-                }else{
-                    $x.style.display = "block";
-                    player1.turn = false;
-                    cpu.turn = true;
-                    turn++;
-                }
-            })
-
-            boardArray.push($cell);
-
-        }
-        console.log(boardArray);
-    };
+const Player = (player, symbol) => {
+    return {player, symbol};
 };
 
-const board = buildBoard();
+const buildBoard = (() => {
 
+let container = document.querySelector(".board");
+let board = [];
 
-const winningTiles = [
-    [0,1,2],
-    [3,4,5],
-    [6,7,8],
-    [0,4,8],
-    [0,3,6],
-    [1,4,7],
-    [2,5,8]
+    for(let i=0; i < 9; i++){
 
-];
-
-
-const Player = (player, symbol, ai, turn) => {
-
-    return {player, symbol, ai, turn};
-};
-
-const player1 = Player("Player", "x", false, true);
-const cpu = Player("CPU", "o", true, false);
-
-let winner = null;
-let turn = 0;
-
-
-
-function cpuTurn(selectedCell){
-
-    if(cpu.turn){
-
-        selectedCell.$o.style.display = "block";
-        cpu.turn = false;
-        player1.turn = true;
-        turn++;
+        board.push('');
     }
-}
 
-function selectedCell(){
+    board.forEach((item, index) => {
+
+        let $cell = document.createElement("div");
+        $cell.className = "cell";
+    
+        container.appendChild($cell);
+
+        })
+
+        Array.from(container.children).forEach(($cell, index) =>{
+
+            $cell.addEventListener('click', function turn(){
+
+                $cell.classList.add(gameState.currentPlayer.symbol);
+                $cell.setAttribute('data', gameState.currentPlayer.symbol);
+
+                board[index] = gameState.currentPlayer.symbol;
+
+                $cell.removeEventListener('click', turn);
+
+                gameState.spaces += 1;
+
+                gameState.switchPlayer();
+
+                gameState.checkWinner();
+
+                
+
+            })
+        });
+    return { board };
+})();
 
 
-    //write AI logic to determine the best cell to choose for each turn and then return the cell to
-    //pass through cpuTurn.
+const gameState = (() =>{
 
-    return move;
-}
+    const p1 = Player("human", 'x');
+    const p2 = Player("computer", 'o');
 
+    let spaces = 0;
 
-function getWinner(){
-
-    //Check the filled spaces and check if any winningTiles are filled with the same mark then display a message. 
-
-
-}
+    let currentPlayer = p1;
+    let winner = false;
 
 
+    const winningTiles = [
+        [0,1,2],
+        [3,4,5],
+        [6,7,8],
+        [0,3,6],
+        [1,4,7],
+        [2,5,8],
+        [0,4,8],
+        [2,4,6],
+    
+    ];
 
-window.addEventListener('load', board);
+
+    function switchPlayer(){
+
+        this.currentPlayer === p1 ? this.currentPlayer = p2 : this.currentPlayer = p1;
+        
+    }
+
+    function checkWinner(){
+        winningTiles.forEach((item, index) => {
+
+            if(buildBoard.board[item[0]] === this.currentPlayer.symbol && 
+                buildBoard.board[item[1]] === this.currentPlayer.symbol && 
+                buildBoard.board[item[2]] === this.currentPlayer.symbol){
+                    this.winner = true;
+                }
+
+        })
+    }
+
+
+    return{ currentPlayer, winner, spaces, winningTiles, switchPlayer, checkWinner};
+})();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
