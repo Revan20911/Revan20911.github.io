@@ -4,14 +4,14 @@ const Player = (player, symbol) => {
 };
 
 const buildBoard = (() => {
-
-let container = document.querySelector(".board");
 let board = [];
 
     for(let i=0; i < 9; i++){
 
         board.push('');
     }
+
+    let container = document.querySelector(".board");
 
     board.forEach((item, index) => {
 
@@ -33,14 +33,18 @@ let board = [];
 
                 $cell.removeEventListener('click', turn);
 
-                gameState.spaces += 1;
-
-                gameState.switchPlayer();
-
                 gameState.checkWinner();
 
-                
+                gameState.spaces += 1;
 
+                if(!gameState.winner ){
+                    if(gameState.spaces < 9){
+                        gameState.switchPlayer();     
+                    }else{
+                        gameState.draw();
+                    }
+                                   
+                }
             })
         });
     return { board };
@@ -49,14 +53,19 @@ let board = [];
 
 const gameState = (() =>{
 
-    const p1 = Player("human", 'x');
-    const p2 = Player("computer", 'o');
+    const p1 = Player("Player 1", 'x');
+    const p2 = Player("Player 2", 'o');
 
     let spaces = 0;
 
     let currentPlayer = p1;
     let winner = false;
 
+    let winMessage = document.querySelector(".modal");
+
+    let message = document.createElement("div");
+    message.className = "modal-content";
+    winMessage.appendChild(message);
 
     const winningTiles = [
         [0,1,2],
@@ -69,7 +78,6 @@ const gameState = (() =>{
         [2,4,6],
     
     ];
-
 
     function switchPlayer(){
 
@@ -84,13 +92,46 @@ const gameState = (() =>{
                 buildBoard.board[item[1]] === this.currentPlayer.symbol && 
                 buildBoard.board[item[2]] === this.currentPlayer.symbol){
                     this.winner = true;
-                }
+                    winMessage.style.display = "flex";
+                    winMessage.appendChild(message).innerHTML = this.currentPlayer.player + ' Wins';
 
+                    let replay = document.createElement("div");
+                    replay.className = "button";
+                    replay.innerHTML = "Replay?";
+    
+
+                    replay.addEventListener('click', reset);
+
+                    message.appendChild(replay);
+
+                }
         })
     }
 
+    function draw(){
 
-    return{ currentPlayer, winner, spaces, winningTiles, switchPlayer, checkWinner};
+
+        winMessage.style.display = "flex";
+        winMessage.appendChild(message).innerHTML = 'DRAW!';
+
+        let replay = document.createElement("div");
+        replay.className = "button";
+        replay.innerHTML = "Replay?";
+
+
+        replay.addEventListener('click', reset);
+
+        message.appendChild(replay);
+
+    }
+
+    function reset(){
+
+        winMessage.style.display = "none";
+        location.reload();
+    }
+
+    return{ currentPlayer, winner, spaces, switchPlayer, checkWinner, draw};
 })();
 
 
